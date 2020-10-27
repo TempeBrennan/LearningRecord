@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./test1.js"></script>
+    <script src="./test2.js"></script>
+    <script src="./test3.js"></script>
+    <script src="./test4.js"></script> -->
+    <!-- <script src="./test5.js"></script> -->
+    <!-- <script src="./test6.js"></script> -->
+    <!-- <script src="./test7.js"></script> -->
+</head>
+
+<body>
+    <script>
+
+        // 1. first usage
+        // getAllFileContent();
+
+        // 2. second usage
+        // downloadInputMan();
+
+
+        // new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         console.log('Promise Begin');
+        //         resolve('p1');
+        //     }, 1000);
+        // }).then((p1) => {
+        //     console.log(p1);
+        //     return new Promise(resolve => setTimeout(() => {
+        //         console.log('Promise1');
+        //         resolve('p2');
+        //     }, 1000))
+        // })
+        //     .then((p2) => {
+        //         console.log(p2);
+        //         return new Promise(resolve => setTimeout(() => {
+        //             console.log('Promise2');
+        //             resolve('p3');
+        //         }, 1000))
+        //     })
+        //     .then((p3) => {
+        //         console.log(p3);
+        //         return new Promise(resolve => setTimeout(() => {
+        //             console.log('Promise3');
+        //         }, 1000))
+        //     });
+    </script>
+    <script>
+        new Promise(function (resolve) {
+            var a = '123';
+            resolve(a);
+            return '456';
+        }).then(function (p) {
+            console.log(p);
+        });
+    </script>
+</body>
+
+</html>

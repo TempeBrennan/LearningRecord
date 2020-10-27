@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./test1.js"></script>
+    <script src="./test8.js"></script>
+</head>
+
+<body>
+    <script>
+        // new MyPromise(function (resolve) {
+        //     var a = '123';
+        //     resolve(a);
+        //     return '456'
+        // }).then(function (p) {
+        //     console.log(p);
+        //     return "I am in then method";
+        // }).then(function (p) {
+        //     console.log(p);
+        // });
+
+        // new MyPromise(function (resolve) {
+        //     downloadFile('inputman.js', function (first) { resolve(first) });
+        // }).then(function (first) {
+        //     return new MyPromise(function (resolve) {
+        //         downloadFile('spread.js', function (second) { resolve(first + second) });
+        //     });
+        // }).then(function (second) {
+        //     return new MyPromise(function () {
+        //         downloadFile('echart.js', function (third) {
+        //             console.log(second + third);
+        //         });
+        //     });
+        // });
+
+        // new Promise(function (resolve) {
+        //     var a = '123';
+        //     return '456'
+        // }).then(function (p) {
+        //     console.log(p);
+        //     return "I am in then method";
+        // }).then(function (p) {
+        //     console.log(p);
+        // });
+
+        // new MyPromise(function (resolve) {
+        //     var a = '123';
+        //     throw new Error('aa');
+        //     resolve(a);
+        //     return '456'
+        // }).catch(function (p) {
+        //     console.log(p);
+        //     return "I am in then method";
+        // })
+
+        new MyPromise(function (resolve) {
+            var a = '123';
+            resolve(a);
+            return '456'
+        }).then(function (p) {
+            throw new Error('aa');
+            console.log(p);
+            return "I am in then method";
+        }, function () {
+            console.log('aaa')
+        }).catch(function () {
+            console.log('error');
+        });
+
+        // function wait(duration) {
+        //     return new MyPromise(function (resolve) {
+        //         setTimeout(resolve, duration);
+        //     })
+        // }
+
+
+        // wait(3000).then(function () {
+        //     console.log('after wait 3s');
+        //     return wait(1000);
+        // }).then(function () {
+        //     console.log('after wait 1s');
+        //     console.log('Meeting a error');
+        //     throw new Error('Meeting a error');
+        // }).then(function () {
+        //     console.log('after wait 2s 1th');
+        //     return wait(2000);
+        // }).then(function () {
+        //     console.log('after wait 2s 2nd');
+        //     return wait(2000);
+        // }).catch(function (e) {
+        //     console.log(e);
+        // }).then(function () {
+        //     console.log('after wait 2s 3rd');
+        //     return wait(2000);
+        // }).then(function () {
+        //     console.log('after wait 2s 4 fth');
+        // });
+
+    </script>
+</body>
+
+</html>
