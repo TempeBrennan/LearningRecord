@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            grid-auto-flow: row;
+
+            border: 3px solid black;
+            padding: 5px;
+            background-color: cornsilk;
+        }
+
+        .item {
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        .item-1 {
+            width: 50px;
+            height: 50px;
+            background-color: #ef342a;
+        }
+
+        .item-2 {
+            width: 90px;
+            height: 20px;
+            background-color: #f68f26;
+        }
+
+        .item-3 {
+            width: 30px;
+            height: 30px;
+            background-color: #4ba946;
+        }
+
+        .item-4 {
+            width: 100px;
+            height: 50px;
+            background-color: #0376c2;
+        }
+
+        .item-5 {
+            width: 90px;
+            height: 60px;
+            background-color: #c077af;
+        }
+
+        .item-6 {
+            width: 50px;
+            height: 30px;
+            background-color: #f8d29d;
+        }
+
+        .item-7 {
+            width: 70px;
+            height: 60px;
+            background-color: #b5a87f;
+        }
+
+        .item-8 {
+            width: 80px;
+            height: 40px;
+            background-color: #d0e4a9;
+        }
+
+        .item-9 {
+            width: 50px;
+            height: 60px;
+            background-color: #4dc7ec;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>justify-content && align-content:</h1>
+    <div id="container">
+        <div class="item item-1">1</div>
+        <div class="item item-2">2</div>
+        <div class="item item-3">3</div>
+        <div class="item item-4">4</div>
+        <div class="item item-5">5</div>
+        <div class="item item-6">6</div>
+        <div class="item item-7">7</div>
+        <div class="item item-8">8</div>
+        <div class="item item-9">9</div>
+    </div>
+
+    justify-content && align-content:
+    <input type="radio" name="justify" value="start" class="justify" id="start"><label for="start">start</label>
+    <input type="radio" name="justify" value="end" class="justify" id="end"><label for="end">end</label>
+    <input type="radio" name="justify" value="center" class="justify" id="center"><label for="center">center</label>
+    <input type="radio" name="justify" value="stretch" class="justify" id="stretch"><label for="stretch">stretch</label>
+    <input type="radio" name="justify" value="space-around" class="justify" id="space-around"><label
+        for="space-around">space-around</label>
+    <input type="radio" name="justify" value="space-between" class="justify" id="space-between"><label
+        for="space-between">space-between</label>
+    <input type="radio" name="justify" value="space-evenly" class="justify" id="space-evenly"><label
+        for="space-evenly">space-evenly</label>
+    <br>
+
+
+
+    <script>
+        var container = document.getElementById('container');
+
+        function bindEvent(children, prop) {
+            for (var i = 0; i < children.length; i++) {
+                children[i].addEventListener('click', function (e) {
+                    container.style[prop] = e.target.value;
+                });
+            }
+        }
+
+        bindEvent(document.querySelectorAll('.justify'), 'justifyContent');
+        bindEvent(document.querySelectorAll('.justify'), 'alignContent');
+
+
+    </script>
+</body>
+
+</html>
