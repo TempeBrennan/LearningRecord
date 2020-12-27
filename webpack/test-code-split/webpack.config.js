@@ -1,4 +1,5 @@
 var path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     mode: "development",
@@ -19,10 +20,14 @@ module.exports = {
         // https: true,
         historyApiFallback: {
             rewrites: [{
-                    from: /\/missing/,
-                    to: '/404.html'
-                }
-            ]
-        }
-    }
+                from: /\/missing/,
+                to: '/404.html'
+            }]
+        },
+        hot: true,
+        hotOnly: true
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
 }
