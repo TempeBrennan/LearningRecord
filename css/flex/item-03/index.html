@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-size: 30px;
+        }
+
+        .container {
+            border: 3px solid black;
+            display: flex;
+            width: 400px;
+            height: 500px;
+        }
+
+        .container01 {
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .content-01 {
+            width: 60px;
+            height: 100px;
+            background-color: red;
+            flex-shrink: 0;
+        }
+
+        .content-02 {
+            width: 300px;
+            height: 200px;
+            background-color: yellow;
+            flex-shrink: 0;
+        }
+
+        .content-03 {
+            width: 50px;
+            height: 100px;
+            background-color: blue;
+            flex-shrink: 3;
+        }
+
+        .content-04 {
+            width: 50px;
+            height: 100px;
+            background-color: green;
+            flex-shrink: 2;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    flex-shrink默认为1就是空间不够，每个元素平摊之后减掉这部分。
+    <div class="container01 container">
+        <div class='content-01 content'>1</div>
+        <div class='content-02 content'>2</div>
+        <div class='content-03 content'>3</div>
+        <div class='content-04 content'>4</div>
+    </div>
+</body>
+
+</html>

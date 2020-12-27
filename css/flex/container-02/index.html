@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-size: 30px;
+        }
+
+        .container {
+            border: 3px solid black;
+            display: flex;
+            width: 800px;
+            height: 500px;
+        }
+
+        .content-01 {
+            width: 60px;
+            height: 100px;
+            background-color: red;
+        }
+
+        .content-02 {
+            width: 300px;
+            height: 200px;
+            background-color: yellow;
+        }
+
+        .content-03 {
+            width: 50px;
+            height: 100px;
+            background-color: blue;
+        }
+
+        .container01 {
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .container02 {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container03 {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .container04 {
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    flex 布局，内部元素的排列<br><br>
+
+    （一）行排列，可以修改justify-content<br><br>
+    <div class="container01 container">
+        <div class='content-01 content'>1</div>
+        <div class='content-02 content'>2</div>
+        <div class='content-03 content'>3</div>
+    </div>
+
+    （二）列排列，可以修改align-items<br><br>
+    <div class="container02 container">
+        <div class='content-01 content'>1</div>
+        <div class='content-02 content'>2</div>
+        <div class='content-03 content'>3</div>
+    </div>
+
+    （三）行排列，可以修改align-items<br><br>
+    <div class="container03 container">
+        <div class='content-01 content'>1</div>
+        <div class='content-02 content'>2</div>
+        <div class='content-03 content'>3</div>
+    </div>
+
+    （四）列排列，可以修改justify-content<br><br>
+    <div class="container04 container">
+        <div class='content-01 content'>1</div>
+        <div class='content-02 content'>2</div>
+        <div class='content-03 content'>3</div>
+    </div>
+</body>
+
+</html>
