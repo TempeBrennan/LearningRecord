@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canv"></canv>
+    <script>
+        var demo = function () {
+
+            /** fullScreenCanvas.js begin **/
+            var canvas = (function () {
+                canvas = document.getElementById("canv");
+                if (canvas !== null) {
+                    document.body.removeChild(canvas);
+                }
+                // creates a blank image with 2d context
+                canvas = document.createElement("canvas");
+                canvas.id = "canv";
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                canvas.style.position = "absolute";
+                canvas.style.top = "0px";
+                canvas.style.left = "0px";
+                canvas.style.zIndex = 1000;
+                canvas.ctx = canvas.getContext("2d");
+                document.body.appendChild(canvas);
+                return canvas;
+            })();
+            var ctx = canvas.ctx;
+            /** fullScreenCanvas.js end **/
+
+
+
+            /** CreateImage.js begin **/
+            // creates a blank image with 2d context
+            var createImage = function (w, h) {
+                var image = document.createElement("canvas");
+                image.width = w;
+                image.height = h;
+                image.ctx = image.getContext("2d");
+                return image;
+            }
+            /** CreateImage.js end **/
+
+
+
+            // define a shape for demo
+            var shape = [0.1, 0.1, 0.9, 0.1, 0.5, 0.5, 0.8, 0.9, 0.1, 0.9];
+
+            // draws the shape as a stroke
+            var strokeShape = function (ctx) {
+                var w, h, i;
+                w = canvas.width;
+                h = canvas.height;
+                ctx.beginPath();
+                ctx.moveTo(shape[0] * w, shape[1] * h)
+                for (i = 2; i < shape.length; i += 2) {
+                    ctx.lineTo(shape[i] * w, shape[i + 1] * h);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+            // draws the shape as filled
+            var fillShape = function (ctx) {
+                var w, h, i;
+                w = canvas.width;
+                h = canvas.height;
+
+                ctx.beginPath();
+                ctx.moveTo(shape[0] * w, shape[1] * h)
+                for (i = 2; i < shape.length; i += 2) {
+                    ctx.lineTo(shape[i] * w, shape[i + 1] * h);
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            var drawInOutStroke = function (width, style, where) {
+                //  clear the workspace
+                workCtx.ctx.globalCompositeOperation = "source-over";
+                workCtx.ctx.clearRect(0, 0, workCtx.width, workCtx.height);
+
+                // set the width to double 
+                workCtx.ctx.lineWidth = width * 2;
+                workCtx.ctx.strokeStyle = style;
+
+                // fill colour does not matter here as its not seen
+                workCtx.ctx.fillStyle = "white";
+
+                // can use any join type
+                workCtx.ctx.lineJoin = "round";
+
+                // draw the shape outline at double width
+                strokeShape(workCtx.ctx);
+
+                // set comp to in. 
+                // in means leave only pixel that are both in the source and destination
+                if (where.toLowerCase() === "in") {
+                    workCtx.ctx.globalCompositeOperation = "destination-in";
+                } else {
+                    // out means only pixels on the destination that are not part of the source
+                    workCtx.ctx.globalCompositeOperation = "destination-out";
+                }
+                fillShape(workCtx.ctx);
+                ctx.drawImage(workCtx, 0, 0);
+            }
+
+            // clear in case of resize
+            ctx.globalCompositeOperation = "source-over";
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // create the workspace canvas
+            var workCtx = createImage(canvas.width, canvas.height);
+
+            // draw the outer stroke
+            drawInOutStroke((canvas.width + canvas.height) / 45, "black", "out");
+
+            // draw the inner stroke
+            drawInOutStroke((canvas.width + canvas.height) / 45, "red", "in");
+
+            // draw the shape outline just to highlight the effect
+            ctx.strokeStyle = "white";
+            ctx.lineJoin = "round";
+            ctx.lineWidth = (canvas.width + canvas.height) / 140;
+
+            strokeShape(ctx);
+
+        };
+        // run the demo
+        demo();
+        // incase fullscreen redraw it all
+        window.addEventListener("resize", demo)
+    </script>
+</body>
+
+</html>
