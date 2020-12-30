@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-size: 30px;
+        }
+
+        .container {
+            border: 3px solid black;
+            display: flex;
+            width: 400px;
+            height: 500px;
+            align-items: center;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .content-01 {
+            width: 60px;
+            height: 100px;
+            background-color: red;
+            flex-shrink: 0;
+        }
+
+        .content-02 {
+            width: 300px;
+            height: 200px;
+            background-color: yellow;
+            flex-shrink: 0;
+        }
+
+        .content-03 {
+            width: 50px;
+            height: 100px;
+            background-color: blue;
+            flex-shrink: 3;
+            align-self: flex-end;
+        }
+
+        .content-04 {
+            width: 50px;
+            height: 100px;
+            background-color: green;
+            flex-shrink: 2;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    flex-self 是用来覆盖父容器的align-items属性的，这个例子第3个item专门放到了底部。
+    <div class="container01 container">
+        <div class='content-01 content'>1</div>
+        <div class='content-02 content'>2</div>
+        <div class='content-03 content'>3</div>
+        <div class='content-04 content'>4</div>
+    </div>
+</body>
+
+</html>
+
+还有一些属性不大常用：
+
+1.flex-basis
+行排列时等价于width，列排列时等价于height。优先级比width和height高，但作用一样。
