@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const x = 100, y = 50;
+        const width = 300;
+        const height = 200;
+        const center = {
+            x: x + width / 2,
+            y: y + height / 2
+        };
+
+        ['double', 'thick thin', 'thin thick', 'triple'].forEach((s) => {
+            paint(s);
+        });
+
+
+        function getPathInfo(width, height, lineWidth, type) {
+            var offset = -lineWidth / 2;
+            var result = [];
+
+            if (type === 'double') {
+                var per = lineWidth / 6;
+                result.push({
+                    lineWidth: per * 2,
+                    scaleX: getScale(width, offset + per * 1),
+                    scaleY: getScale(height, offset + per * 1),
+                });
+                result.push({
+                    lineWidth: per * 2,
+                    scaleX: getScale(width, offset + per * 5),
+                    scaleY: getScale(height, offset + per * 5),
+                });
+            }
+
+            if (type === 'thick thin') {
+                var per = lineWidth / 10;
+                var lineWidth = per * 2;
+                result.push({
+                    lineWidth: per * 2,
+                    scaleX: getScale(width, offset + per * 1),
+                    scaleY: getScale(height, offset + per * 1),
+                });
+                result.push({
+                    lineWidth: per * 6,
+                    scaleX: getScale(width, offset + per * 7),
+                    scaleY: getScale(height, offset + per * 7),
+                });
+            }
+
+            if (type === 'thin thick') {
+                var per = lineWidth / 10;
+                var lineWidth = per * 2;
+                result.push({
+                    lineWidth: per * 6,
+                    scaleX: getScale(width, offset + per * 3),
+                    scaleY: getScale(height, offset + per * 3),
+                });
+                result.push({
+                    lineWidth: per * 2,
+                    scaleX: getScale(width, offset + per * 9),
+                    scaleY: getScale(height, offset + per * 9),
+                });
+            }
+
+            if (type === 'triple') {
+                var per = lineWidth / 12;
+                var lineWidth = per * 2;
+                result.push({
+                    lineWidth: per * 2,
+                    scaleX: getScale(width, offset + per * 1),
+                    scaleY: getScale(height, offset + per * 1),
+                });
+                result.push({
+                    lineWidth: per * 4,
+                    scaleX: getScale(width, offset + per * 6),
+                    scaleY: getScale(height, offset + per * 6),
+                });
+                result.push({
+                    lineWidth: per * 2,
+                    scaleX: getScale(width, offset + per * 10),
+                    scaleY: getScale(height, offset + per * 10),
+                });
+            }
+            return result;
+        }
+
+        function getScale(curSize, offset) {
+            return (curSize + offset * 2) / curSize;
+        }
+
+        function paint(type) {
+            var canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 500;
+            document.body.appendChild(canvas);
+
+            var ctx = canvas.getContext('2d');
+            paintLine(ctx, 1, '#000000');
+
+            var result = getPathInfo(width, height, 20, type);
+            result.forEach(r => {
+                ctx.save();
+                scale(ctx, r.scaleX, r.scaleY);
+                paintLine(ctx, r.lineWidth, '#FF0000');
+                ctx.restore();
+            });
+        }
+
+        function paintLine(ctx, lineWidth, color) {
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + width, y);
+            ctx.lineTo(x + width, y + height);
+            ctx.lineTo(x, y + height);
+            ctx.closePath();
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.stroke();
+        }
+
+        function scale(ctx, scaleX, scaleY) {
+            ctx.translate(center.x * (1 - scaleX), center.y * (1 - scaleY));
+            ctx.scale(scaleX, scaleY);
+        }
+
+
+
+    </script>
+</body>
+
+</html>
