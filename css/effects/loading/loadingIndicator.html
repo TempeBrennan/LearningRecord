@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .rotate-animate {
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: gray;
+            opacity: 0.3;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;;
+            height: 100%;
+            z-index: 0;
+        }
+        .loading-indicator {
             border: 16px solid #f3f3f3;
             border-radius: 50%;
             border-top: 16px solid #2842d8;
             width: 100px;
             height: 100px;
-            animation: my-animation1 1s cubic-bezier(0.4,0.1,0.5,1) infinite;
-            /* 仅播放三次*/
-            /* animation:mymove 5s 3; */
-        }
-
-        .rotate-animate.fill-color {
-            margin-left: 20px;
-            border-color: #2842d8 #d1b516 #cf4928 #27c965;
+            animation: my-animation1 1s ease-in infinite;
+            z-index: 999;
+            opacity: 1;
         }
 
         @keyframes my-animation1 {
@@ -33,10 +40,9 @@
         }
     </style>
 </head>
-
 <body>
-    <div class="rotate-animate"></div>
-    <div class="rotate-animate fill-color"></div>
+    <div class="loading-container">
+        <div class="loading-indicator"></div>
+    </div>
 </body>
-
 </html>
