@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const x = 100, y = 50;
+        const width = 300;
+        const height = 200;
+
+        var createImage = function (w, h) {
+            var image = document.createElement("canvas");
+            image.width = w;
+            image.height = h;
+            image.ctx = image.getContext("2d");
+            return image;
+        }
+
+        function paintOutterBorder(lineWidth, color) {
+            var ctxReal = window.canvas.getContext("2d");
+
+            var ctx = window.helperCanvas.getContext("2d");
+            ctx.clearRect(0, 0, window.helperCanvas.width, window.helperCanvas.height);
+
+            ctx.save();
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + width, y);
+            ctx.lineTo(x + width, y + height);
+            ctx.lineTo(x, y + height);
+            ctx.closePath();
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth * 2;
+            ctx.stroke();
+
+            ctx.globalCompositeOperation = "destination-out";
+            ctx.fill();
+            ctxReal.drawImage(window.helperCanvas, 0, 0);
+            ctx.restore();
+        }
+
+        function paintInnerBorder(lineWidth, color) {
+            var ctxReal = window.canvas.getContext("2d");
+
+            var ctx = window.helperCanvas.getContext("2d");
+            ctx.clearRect(0, 0, window.helperCanvas.width, window.helperCanvas.height);
+
+            ctx.save();
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + width, y);
+            ctx.lineTo(x + width, y + height);
+            ctx.lineTo(x, y + height);
+            ctx.closePath();
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth * 2;
+            ctx.stroke();
+
+            ctx.globalCompositeOperation = "destination-in";
+            ctx.fill();
+            ctxReal.drawImage(window.helperCanvas, 0, 0);
+            ctx.restore();
+        }
+
+        function init() {
+            var canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 500;
+            document.body.appendChild(canvas);
+
+            window.canvas = canvas;
+            window.helperCanvas = createImage(canvas.width, canvas.height);
+        }
+
+        init();
+
+        window.canvas.getContext("2d").globalCompositeOperation = "source-over";
+
+        paintOutterBorder(30, '#008B00');
+        paintInnerBorder(30, '#00BFFF');
+
+        paintOutterBorder(10, '#FFC1C1');
+        paintInnerBorder(10, '#FF8C00');
+
+        // paintOutterBorder(10, '#FF3366');
+        // paintInnerBorder(10, 'F30330');
+    </script>
+</body>
+
+</html>
