@@ -1,10 +1,15 @@
 const path = require('path');
 
 module.exports = {
-    entry: path.resolve(__dirname, 'main.js'),
+    // entry: path.resolve(__dirname, 'main.js'),
+    entry: {
+        main: path.resolve(__dirname, 'main.js'),
+        print: path.resolve(__dirname, 'print.js'),
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        // filename: 'bundle.js',
+        filename: '[name].bundle.js',
     },
     module: {
         rules: [{
