@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var l = 60;
+        function init() {
+            var canvas = document.createElement('canvas');
+            canvas.width = 1000;
+            canvas.height = 1000;
+            canvas.style.border = '1px solid black';
+            document.body.appendChild(canvas);
+            window.canvas = canvas;
+
+            var ctx = canvas.getContext('2d');
+            var points = [
+                {
+                    x: 100,
+                    y: 300
+                },
+                {
+                    x: 400,
+                    y: 100
+                },
+                {
+                    x: 500,
+                    y: 200
+                },
+                {
+                    x: 700,
+                    y: 300
+                },
+            ];
+            paintLine(ctx, points, 'black');
+            let high = getParallelPoints(points, true);
+            paintLine(ctx, high, 'red');
+            let low = getParallelPoints(points, false);
+            paintLine(ctx, low, 'green');
+        }
+
+        init();
+
+        function getRate(x1, y1, x2, y2) {
+            return -Math.atan2(y2 - y1, x2 - x1);
+        }
+
+        function getOffsetX(l, rate) {
+            return l * Math.sin(rate);
+        }
+
+        function getOffsetY(l, rate) {
+            return l * Math.cos(rate);
+        }
+
+        function paintLine(ctx, points, color) {
+            var ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            for (let i = 0; i < points.length; i++) {
+
+                if (i === 0) {
+                    ctx.moveTo(points[i].x, points[i].y);
+                    continue;
+                }
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = 20;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        }
+
+        // Ax+By+C=0 一般式
+        function getLineEquationInfo(p1, p2) {
+            let x1 = p1.x, y1 = p1.y, x2 = p2.x, y2 = p2.y;
+
+            return {
+                factorA: y2 - y1,
+                factorB: x1 - x2,
+                factorC: x2 * y1 - x1 * y2
+            }
+        }
+
+        // 求两条直线一般式的交点
+        function getLineintersect(line1, line2) {
+            var a1 = line1.factorA, b1 = line1.factorB, c1 = line1.factorC;
+            var a2 = line2.factorA, b2 = line2.factorB, c2 = line2.factorC;
+
+            return {
+                x: (c2 * b1 - c1 * b2) / (a1 * b2 - a2 * b1),
+                y: (c1 * a2 - c2 * a1) / (a1 * b2 - a2 * b1)
+            }
+        }
+
+        function getParallelLine(start, end, isHigh) {
+            var rate = getRate(start.x, start.y, end.x, end.y);
+            var offsetX = getOffsetX(l, rate);
+            var offsetY = getOffsetY(l, rate);
+            return {
+                start: {
+                    x: isHigh ? start.x + offsetX : start.x - offsetX,
+                    y: isHigh ? start.y + offsetY : start.y - offsetY
+                },
+                end: {
+                    x: isHigh ? end.x + offsetX : end.x - offsetX,
+                    y: isHigh ? end.y + offsetY : end.y - offsetY
+                }
+            };
+        }
+
+        function getParallelPoints(points, isHigh) {
+            var result = [];
+            for (let i = 0; i < points.length - 1; i++) {
+                let cur = points[i];
+                let next = points[i + 1];
+                let paraller = getParallelLine(cur, next, isHigh);
+
+                if (i === 0) {
+                    result.push(paraller.start);
+                }
+
+                if (i === points.length - 2) {
+                    result.push(paraller.end);
+                    break;
+                }
+
+                let paraller2 = getParallelLine(next, points[i + 2], isHigh);
+                let curFactor = getLineEquationInfo(paraller.start, paraller.end);
+                let nextFactor = getLineEquationInfo(paraller2.start, paraller2.end);
+                let intersect = getLineintersect(curFactor, nextFactor);
+                result.push(intersect);
+            }
+
+            return result;
+        }
+    </script>
+</body>
+
+</html>
