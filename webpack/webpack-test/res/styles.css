@@ -1,0 +1,10 @@
+@font-face{
+    font-family: "myFont";
+    src:url('./test.ttf');
+    font-weight: 12;
+}
+
+h1 {
+    font-family: 'myFont';
+    color:red;
+}

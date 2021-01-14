@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://test-webpack/./print.js"],"names":[],"mappings":";;;;AAAA,qB","file":"print.bundle.js","sourcesContent":["console.log('print');"],"sourceRoot":""}
