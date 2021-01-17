@@ -4,7 +4,7 @@ module.exports = {
     // entry: path.resolve(__dirname, 'main.js'),
     entry: {
         main: path.resolve(__dirname, 'main.js'),
-        print: path.resolve(__dirname, 'print.js'),
+        // print: path.resolve(__dirname, 'print.js'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

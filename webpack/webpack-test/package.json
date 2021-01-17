@@ -12,9 +12,7 @@
     "csv-loader": "^3.0.3",
     "jquery": "^3.5.1",
     "webpack": "^5.12.2",
-    "xml-loader": "^1.2.1"
-  },
-  "devDependencies": {
+    "xml-loader": "^1.2.1",
     "@types/jquery": "^3.5.5",
     "css-loader": "^5.0.1",
     "style-loader": "^2.0.0",
