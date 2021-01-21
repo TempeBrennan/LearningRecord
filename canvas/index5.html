@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var l = 60;
+        function init() {
+            var canvas1 = document.createElement('canvas');
+            canvas1.width = 1000;
+            canvas1.height = 500;
+            canvas1.style.position = 'absolute';
+            canvas1.style.left = '0px';
+            canvas1.style.top = '0px';
+            canvas1.style.border = '1px solid black';
+            document.body.appendChild(canvas1);
+
+            var ctx = canvas1.getContext('2d');
+
+            ctx.beginPath();
+            ctx.moveTo(0,0);
+            ctx.lineTo(1000,0);
+            ctx.lineTo(1000,500);
+            ctx.lineTo(0,500);
+            ctx.closePath();
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+
+            var canvas = document.createElement('canvas');
+            canvas.width = 1000;
+            canvas.height = 500;
+            canvas.style.position = 'absolute';
+            canvas.style.left = '0px';
+            canvas.style.top = '0px';
+            canvas.style.border = '1px solid black';
+            document.body.appendChild(canvas);
+            window.canvas = canvas;
+
+            //
+            var ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(100,50);
+            ctx.lineTo(400,50);
+            ctx.lineTo(400,300);
+            ctx.lineTo(100,300);
+            ctx.closePath();
+            ctx.fillStyle = 'green';
+            ctx.fill();
+
+
+            //
+            ctx.save();
+
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 40;
+            ctx.globalCompositeOperation = 'source-atop';
+            ctx.stroke();
+
+            ctx.strokeStyle = 'green';
+            ctx.lineWidth = 20;
+            ctx.globalCompositeOperation = 'source-atop';
+            ctx.stroke();
+
+            ctx.strokeStyle = 'transparent';
+            ctx.lineWidth = 20;
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.stroke();
+
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 40;
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
