@@ -1,8 +1,8 @@
-// import $ from 'jquery';
+import $ from 'jquery';
 
-// $.getJSON("test.json", function (json) {
-//     console.log(json);
-// });
+$.getJSON("test.json", function (json) {
+    console.log(json);
+});
 
 import './res/styles.css';
 
@@ -16,3 +16,7 @@ import json from './res/test.json';
 
 console.log(xml);
 console.log(json);
+
+import { print } from './print';
+
+print();
