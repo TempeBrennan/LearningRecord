@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+        <button>test</button>
+        <input>
+    </div>
+    <script>
+        var container = document.getElementById('container');
+        console.log(window.getComputedStyle(container).display);
+        console.log(window.getComputedStyle(container.firstElementChild).display);
+        container.style.display = 'none';
+        console.log(window.getComputedStyle(container).display);
+        console.log(window.getComputedStyle(container.firstElementChild).display);
+    </script>
+</body>
+
+</html>

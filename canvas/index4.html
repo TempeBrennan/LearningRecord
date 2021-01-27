@@ -30,7 +30,7 @@
                 },
                 {
                     x: 500,
-                    y: 200
+                    y: 120
                 },
                 {
                     x: 700,
@@ -38,10 +38,12 @@
                 },
             ];
             paintLine(ctx, points, 'black');
+            // paintBezier(ctx, points, 'black');
             let high = getParallelPoints(points, true);
+            // paintBezier(ctx, high, 'red');
             paintLine(ctx, high, 'red');
-            let low = getParallelPoints(points, false);
-            paintLine(ctx, low, 'green');
+            // let low = getParallelPoints(points, false);
+            // paintBezier(ctx, low, 'green');
         }
 
         init();
@@ -70,6 +72,17 @@
                 ctx.lineTo(points[i].x, points[i].y);
             }
             ctx.lineWidth = 20;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        }
+
+        function paintBezier(ctx, points, color) {
+            var ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            // ctx.quadraticCurveTo(points[1].x, points[1].y, points[2].x, points[2].y);
+            ctx.bezierCurveTo(points[1].x, points[1].y, points[2].x, points[2].y, points[3].x, points[3].y);
+            ctx.lineWidth = 5;
             ctx.strokeStyle = color;
             ctx.stroke();
         }
