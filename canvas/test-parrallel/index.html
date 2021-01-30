@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./main.js"></script>
+</head>
+
+<body>
+    <script>
+        var points1 = [
+            {
+                type: 0,
+                point: {
+                    x: 200,
+                    y: 200
+                }
+            },
+            {
+                type: 0,
+                point: {
+                    x: 300,
+                    y: 200
+                }
+            },
+            {
+                type: 1,
+                point: {
+                    center: {
+                        x: 200,
+                        y: 200
+                    },
+                    a: 100,
+                    b: 100,
+                    startAngle: 0,
+                    endAngle: -0.5 * Math.PI,
+                    clockwise: true
+                }
+            },
+            {
+                type: 0,
+                point: {
+                    x: 200,
+                    y: 200
+                }
+            }
+        ];
+
+        var points2 = [
+            {
+                type: 0,
+                point: {
+                    x: 800,
+                    y: 200
+                }
+            },
+            {
+                type: 0,
+                point: {
+                    x: 300,
+                    y: 200
+                }
+            }
+        ];
+
+        console.log(HanXing.getParallelPathPoints(points1, 10, 0));
+        // HanXing.getParallelPathPoints(points2, 10, 0);
+        // var result = HanXing.getLineArcIntersect({
+        //     startPoint: {
+        //         x: 2,
+        //         y: 0
+        //     },
+        //     endPoint: {
+        //         x: 1,
+        //         y: 1
+        //     }
+        // },
+        //     {
+        //         center: {
+        //             x: 1,
+        //             y: 1
+        //         },
+        //         a: 1,
+        //         b: 1,
+        //         startAngle: 0,
+        //         endAngle: -0.5 * Math.PI,
+        //         clockwise: true
+        //     }, {
+        //     x: 1,
+        //     y: 0
+        // });
+    </script>
+</body>
+
+</html>
