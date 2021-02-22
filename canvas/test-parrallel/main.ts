@@ -129,65 +129,17 @@ module HanXing {
             return ellipseInfo.clockwise ? ellipseInfo.b - offset : ellipseInfo.b + offset;
         };
     }
+
+    function getArcInfo(ellipseInfo: EllipseInfo, startPoint: IPoint, endPoint: IPoint, offset: number, parallelType: ParallelType): IPointArcInfo {
+        let a = getEllipseMajorAxis(ellipseInfo, offset, parallelType);
+        return {
+            startAngle: Math.acos((startPoint.x - ellipseInfo.center.x) / a),
+            endAngle: -Math.acos((endPoint.x - ellipseInfo.center.x) / a)
+        };
+    }
     //#endregion
 
     //#region Main
-    function getParallelAllPoints(points: Array<IPoint>, offset: number, parallelType: ParallelType): Array<IPoint> {
-        let result: Array<IPoint> = [];
-        let allPoints: Array<IPoint> = [];
-
-        let len = allPoints.length;
-        let pointRepeat = false;
-        for (let i = 0; i < len - 1; i++) {
-            let cur = allPoints[i];
-            let next = allPoints[i + 1];
-            if (cur.x === next.x && cur.y === next.y) {
-                pointRepeat = true;
-                continue;
-            }
-            let curParallelLine = getLineOffsetPath(cur, next, offset, parallelType);
-
-            if (i === 0) {
-                result.push(curParallelLine.startPoint);
-            }
-
-            if (len === 2) {
-                result.push(curParallelLine.endPoint);
-                break;
-            }
-
-            if (i === len - 2) {
-                if (allPoints[0].x === allPoints[len - 1].x && allPoints[0].y === allPoints[len - 1].y) {
-                    let nextParallelLine = getLineOffsetPath(allPoints[0], allPoints[1], offset, parallelType);
-                    let curLineInfo = getLineEquationInfo(curParallelLine.startPoint, curParallelLine.endPoint);
-                    let nextLineInfo = getLineEquationInfo(nextParallelLine.startPoint, nextParallelLine.endPoint);
-                    let intersectPoint = getLineIntersect(curLineInfo, nextLineInfo);
-                    result.push(intersectPoint);
-                    result[0] = intersectPoint;
-                    break;
-                } else {
-                    result.push(curParallelLine.endPoint);
-                    break;
-                }
-            }
-
-            if (i === len - 1) {
-                break;
-            }
-
-            let nextParallelLine = getLineOffsetPath(next, allPoints[i + 2], offset, parallelType);
-            let curLineInfo = getLineEquationInfo(curParallelLine.startPoint, curParallelLine.endPoint);
-            let nextLineInfo = getLineEquationInfo(nextParallelLine.startPoint, nextParallelLine.endPoint);
-            let intersectPoint = getLineIntersect(curLineInfo, nextLineInfo);
-            result.push(intersectPoint);
-            if (pointRepeat) {
-                result.push(intersectPoint);
-                pointRepeat = false;
-            }
-        }
-
-        return result;
-    }
 
     export function getParallelPathPoints(pointInfos: Array<PointInfo>, offset: number, parallelType: ParallelType): Array<IPoint> {
         let result: Array<IPoint> = [];
@@ -227,6 +179,11 @@ module HanXing {
             } else {
                 let next = pointInfos[i + 1];
                 let pt = getEndPoint(parallel.startPoint, parallel.endPoint, cur, next, offset, parallelType);
+                if (cur.type === PointType.ArcTo) {
+                    let arcInfo = getArcInfo(cur.point as EllipseInfo, result[result.length - 1], pt, offset, parallelType);
+                    (pt as any).startAngle = arcInfo.startAngle;
+                    (pt as any).endAngle = arcInfo.endAngle;
+                }
                 result.push(pt);
                 flatternEllipse(cur);
             }
@@ -345,6 +302,11 @@ module HanXing {
     export interface IPoint {
         x: number;
         y: number;
+    }
+
+    export interface IPointArcInfo {
+        startAngle: number;
+        endAngle: number;
     }
     //#endregion
 

@@ -116,58 +116,15 @@ var HanXing;
         }
         ;
     }
+    function getArcInfo(ellipseInfo, startPoint, endPoint, offset, parallelType) {
+        var a = getEllipseMajorAxis(ellipseInfo, offset, parallelType);
+        return {
+            startAngle: Math.acos((startPoint.x - ellipseInfo.center.x) / a),
+            endAngle: -Math.acos((endPoint.x - ellipseInfo.center.x) / a)
+        };
+    }
     //#endregion
     //#region Main
-    function getParallelAllPoints(points, offset, parallelType) {
-        var result = [];
-        var allPoints = [];
-        var len = allPoints.length;
-        var pointRepeat = false;
-        for (var i = 0; i < len - 1; i++) {
-            var cur = allPoints[i];
-            var next = allPoints[i + 1];
-            if (cur.x === next.x && cur.y === next.y) {
-                pointRepeat = true;
-                continue;
-            }
-            var curParallelLine = getLineOffsetPath(cur, next, offset, parallelType);
-            if (i === 0) {
-                result.push(curParallelLine.startPoint);
-            }
-            if (len === 2) {
-                result.push(curParallelLine.endPoint);
-                break;
-            }
-            if (i === len - 2) {
-                if (allPoints[0].x === allPoints[len - 1].x && allPoints[0].y === allPoints[len - 1].y) {
-                    var nextParallelLine_1 = getLineOffsetPath(allPoints[0], allPoints[1], offset, parallelType);
-                    var curLineInfo_1 = getLineEquationInfo(curParallelLine.startPoint, curParallelLine.endPoint);
-                    var nextLineInfo_1 = getLineEquationInfo(nextParallelLine_1.startPoint, nextParallelLine_1.endPoint);
-                    var intersectPoint_1 = getLineIntersect(curLineInfo_1, nextLineInfo_1);
-                    result.push(intersectPoint_1);
-                    result[0] = intersectPoint_1;
-                    break;
-                }
-                else {
-                    result.push(curParallelLine.endPoint);
-                    break;
-                }
-            }
-            if (i === len - 1) {
-                break;
-            }
-            var nextParallelLine = getLineOffsetPath(next, allPoints[i + 2], offset, parallelType);
-            var curLineInfo = getLineEquationInfo(curParallelLine.startPoint, curParallelLine.endPoint);
-            var nextLineInfo = getLineEquationInfo(nextParallelLine.startPoint, nextParallelLine.endPoint);
-            var intersectPoint = getLineIntersect(curLineInfo, nextLineInfo);
-            result.push(intersectPoint);
-            if (pointRepeat) {
-                result.push(intersectPoint);
-                pointRepeat = false;
-            }
-        }
-        return result;
-    }
     function getParallelPathPoints(pointInfos, offset, parallelType) {
         var result = [];
         var len = pointInfos.length;
@@ -205,6 +162,11 @@ var HanXing;
             else {
                 var next = pointInfos[i + 1];
                 var pt = getEndPoint(parallel.startPoint, parallel.endPoint, cur, next, offset, parallelType);
+                if (cur.type === PointType.ArcTo) {
+                    var arcInfo = getArcInfo(cur.point, result[result.length - 1], pt, offset, parallelType);
+                    pt.startAngle = arcInfo.startAngle;
+                    pt.endAngle = arcInfo.endAngle;
+                }
                 result.push(pt);
                 flatternEllipse(cur);
             }

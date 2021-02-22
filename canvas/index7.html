@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var l = 60;
+        function init() {
+            var canvas1 = document.createElement('canvas');
+            canvas1.width = 1000;
+            canvas1.height = 500;
+            canvas1.style.position = 'absolute';
+            canvas1.style.left = '0px';
+            canvas1.style.top = '0px';
+            canvas1.style.border = '1px solid black';
+            document.body.appendChild(canvas1);
+
+            var ctx = canvas1.getContext('2d');
+
+            ctx.lineWidth = 0;
+            // ctx.strokeStyle = 'transparent';
+            ctx.beginPath();
+            // ctx.moveTo(200,200);
+            // ctx.arc(200, 200, 100, 0.25 * Math.PI, -0.25 * Math.PI, true);
+            // ctx.arc(200, 200, 100, 0.25 * Math.PI, 1.75 * Math.PI, true);
+            // ctx.arc(200, 200, 100, -1.75 * Math.PI, -0.25 * Math.PI, true);
+            // ctx.arc(200, 200, 100, -1.75 * Math.PI, 1.75 * Math.PI, true);
+            // ctx.arc(200, 200, 100, 3.14159265358979, -3.14159265358979, true);
+            // ctx.strokeStyle = 'red';
+            // false 表示顺时针
+            // ctx.arc(200, 200, 100, 0.5*Math.PI,  Math.PI, false);
+            ctx.arc(200, 200, 100, -1.5 * Math.PI, Math.PI, false);
+            // ctx.stroke();
+            // ctx.arc(200, 200, 100, 0, -5.6265212259515245, false);
+            ctx.stroke();
+
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

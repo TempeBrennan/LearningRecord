@@ -55,18 +55,17 @@
 
             //
             ctx.save();
-
             ctx.strokeStyle = 'red';
             ctx.lineWidth = 40;
             ctx.globalCompositeOperation = 'source-atop';
             ctx.stroke();
 
-            ctx.strokeStyle = 'green';
+            ctx.strokeStyle = 'white';
             ctx.lineWidth = 20;
-            ctx.globalCompositeOperation = 'source-atop';
+            ctx.globalCompositeOperation = 'destination-out';
             ctx.stroke();
 
-            ctx.strokeStyle = 'transparent';
+            ctx.strokeStyle = 'white';
             ctx.lineWidth = 20;
             ctx.globalCompositeOperation = 'destination-over';
             ctx.stroke();
@@ -75,7 +74,6 @@
             ctx.lineWidth = 40;
             ctx.globalCompositeOperation = 'destination-over';
             ctx.stroke();
-
             ctx.restore();
         }
 
