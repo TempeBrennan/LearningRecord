@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #range1 {
+            direction: rtl
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    Bezier Simulate<input id="range1" min="0.01" max="0.5" step="0.01" value='0.5' type="range">
+    <script>
+        var l = 60;
+        function init() {
+            var canvas1 = document.getElementById('canvas1');
+            canvas1.width = 1000;
+            canvas1.height = 500;
+            canvas1.style.border = '1px solid black';
+
+            var ctx = canvas1.getContext('2d');
+            let cur1 = [
+                {
+                    x: 100,
+                    y: 200
+                },
+                {
+                    x: 300,
+                    y: 0
+                },
+                {
+                    x: 500,
+                    y: 200
+                }
+            ];
+            // paintSecondBezireCurve(ctx, cur1[0], cur1[1], cur1[2]);
+            beginCurveTo(ctx, cur1[0], cur1[1], cur1[2]);
+            // paintThirdBezireCurve(ctx, cur2[0], cur2[1], cur2[2], cur2[3]);
+
+            document.getElementById('range1').addEventListener('input', function (e) {
+                paintSecondBezireCurve(ctx, cur1[0], cur1[1], cur1[2]);
+            });
+        }
+
+        function secondBezier(t, w) {
+            let t2 = t * t;
+            let mt = 1 - t;
+            let mt2 = mt * mt;
+            let r = 0.01;
+            let f = [
+                r * mt2,
+                2 * r * mt * t,
+                r * t2
+            ];
+            let basis = f[0] + f[1] + f[2]
+            return (f[0] * w[0] + f[1] * w[1] + f[2] * w[2]) / basis;
+            // return w[0] * mt2 + w[1] * 2 * mt * t + w[2] * t2;
+        }
+
+        function getSecondHorizontalWArr(pt1, pt2, pt3) {
+            return [pt1.x, pt2.x, pt3.x];
+        }
+
+        function getSecondVerticalWArr(pt1, pt2, pt3) {
+            return [pt1.y, pt2.y, pt3.y];
+        }
+
+        function getThirdHorizontalWArr(pt1, pt2, pt3, pt4) {
+            return [pt1.x, pt2.x, pt3.x, pt4.x];
+        }
+
+        function getThirdVerticalWArr(pt1, pt2, pt3, pt4) {
+            return [pt1.y, pt2.y, pt3.y, pt4.y];
+        }
+
+        function paintSecondBezireCurve(ctx, pt1, pt2, pt3) {
+            let unit = parseFloat(document.getElementById('range1').value);
+            let hW = getSecondHorizontalWArr(pt1, pt2, pt3);
+            let vW = getSecondVerticalWArr(pt1, pt2, pt3);
+            let result = [];
+
+            for (let i = 0; i <= 1; i += unit) {
+                let x = secondBezier(i, hW);
+                let y = secondBezier(i, vW);
+                result.push({
+                    x: x,
+                    y: y
+                });
+            }
+            result.push({
+                x: secondBezier(1, hW),
+                y: secondBezier(1, vW)
+            });
+
+            ctx.save();
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'red';
+            let start = result.shift();
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            result.forEach(function (r) {
+                ctx.lineTo(r.x, r.y);
+            });
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function beginCurveTo(ctx, pt1, pt2, pt3) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            
+            ctx.save();
+            ctx.strokeStyle = 'green';
+            ctx.beginPath();
+            ctx.bezierCurveTo(pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y);
+            ctx.stroke();
+            ctx.restore();
+
+            ctx.save();
+            ctx.strokeStyle = 'red';
+            let hPos1 = getFirstPoints(0.5, pt1.x, pt2.x, pt3.x);
+            let vPos1 = getFirstPoints(0.5, pt1.y, pt2.y, pt3.y);
+            let hPos2 = getSecondPoints(0.5, pt1.x, pt2.x, pt3.x);
+            let vPos2 = getSecondPoints(0.5, pt1.y, pt2.y, pt3.y);
+            ctx.moveTo(hPos1[0], vPos1[0]);
+            ctx.beginPath();
+            ctx.bezierCurveTo(hPos1[0], vPos1[0], hPos1[1], vPos1[1], hPos1[2], vPos1[2]);
+            ctx.bezierCurveTo(hPos2[0], vPos2[0], hPos2[1], vPos2[1], hPos2[2], vPos2[2]);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function getFirstPoints(z, pos1, pos2, pos3) {
+            return [pos1, z * pos2 - (z - 1) * pos1, z * z * pos3 - 2 * z * (z - 1) * pos2 + (z - 1) * (z - 1) * pos1];
+        }
+
+        function getSecondPoints(z, pos1, pos2, pos3) {
+            return [z * z * pos3 - 2 * z * (z - 1) * pos2 + (z - 1) * (z - 1) * pos1, z * pos3 - (z - 1) * pos2, pos3];
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -19,6 +19,16 @@
         container.style.display = 'none';
         console.log(window.getComputedStyle(container).display);
         console.log(window.getComputedStyle(container.firstElementChild).display);
+
+        var arr = ['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff', 'ggg', 'hhh', 'iii'];
+        arr.forEach(function (i, index) {
+            if (i === 'eee') {
+                arr.splice(index, 0, '111');
+                arr.splice(index + 1, 0, '222');
+                arr.splice(index + 2, 0, '333');
+                arr.splice(index + 3, 0, '444');
+            }
+        });
     </script>
 </body>
 
